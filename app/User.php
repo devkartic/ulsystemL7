@@ -1,7 +1,6 @@
 <?php
 
 namespace App;
-use App\Role;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -39,6 +38,20 @@ class User extends Authenticatable
     ];
 
     public function roles(){
-        $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasAnyRoles($roles){
+        if($this->roles()->whereIn('name', $roles)->first()){
+            return true;
+        }
+        return false;
+    }
+
+    public function hasRole($role){
+        if($this->roles()->where('name', $role)->first()){
+            return true;
+        }
+        return false;
     }
 }
