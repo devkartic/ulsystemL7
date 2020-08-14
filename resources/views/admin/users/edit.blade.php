@@ -13,7 +13,7 @@
                         @foreach($roles as $role)
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" name="roles[]" type="checkbox"
-                                       id="inlineCheckbox{{ $role->id }}" @if($role->users()->find($user->id)) checked @endif value="{{ $role->id }}">
+                                       id="inlineCheckbox{{ $role->id }}" @if($user->roles->pluck('id')->contains($role->id)) checked @endif value="{{ $role->id }}">
                                 <label class="form-check-label"
                                        for="inlineCheckbox{{ $role->id }}">{{ $role->name }}</label>
                             </div>

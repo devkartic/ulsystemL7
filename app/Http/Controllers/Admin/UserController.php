@@ -7,14 +7,12 @@ use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Route;
 
 class UserController extends Controller
 {
     private $currentPath;
     public function __construct(){
         $this->middleware('auth');
-        $this->currentPath= Route::getFacadeRoot()->current()->uri();
     }
     /**
      * Display a listing of the resource.
@@ -46,7 +44,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if(Gate::denies($this->currentPath)){
+        if(Gate::denies('edit-user')){
             return redirect()->route('admin.user.index');
         }
         $roles = Role::all();
@@ -74,7 +72,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if(Gate::denies($this->currentPath)){
+        if(Gate::denies('delete-user')){
             return redirect()->route('admin.user.index');
         }
 

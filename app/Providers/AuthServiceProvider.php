@@ -25,9 +25,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $currentPath= $this->app->request->getRequestUri();
-        Gate::define($currentPath, function ($user){
-            return $user->hasRole('admin');
+        Gate::define('manage-users', function ($user){
+            return $user->hasAnyRoles(['admin', 'author']);
+        });
+
+        Gate::define('edit-user', function ($user){
+            return $user->hasAnyRoles(['admin', 'author']);
+        });
+
+        Gate::define('delete-user', function ($user){
+            return $user->hasAnyRoles(['admin', 'author']);
         });
     }
 }

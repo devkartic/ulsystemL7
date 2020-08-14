@@ -23,6 +23,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::resource('admin/user', 'Admin\UserController', ['except'=>['show', 'create', 'store']]);
 
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function (){
+Route::namespace('Admin')->prefix('admin')->middleware('can:manage-users')->name('admin.')->group(function (){
     Route::resource('user', 'UserController', ['except'=>['show', 'create', 'store']]);
 });
